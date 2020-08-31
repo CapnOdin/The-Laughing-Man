@@ -1,6 +1,42 @@
 ﻿
 #Include LOGFONT.ahk
 
+
+OneDimentionalText(Str, Width, Height, Font, fSize, fStyle, fColour) {
+	pBitmap := Gdip_CreateBitmap(Width, Height)
+	
+	G := Gdip_GraphicsFromImage(pBitmap)
+	
+	Gdip_SetSmoothingMode(G, 4)
+	
+	Options := "s" fSize " " fStyle " r4 NoWrap Centre vCentre c" fColour ; " h" strSize["h"]
+	x := Width / 2
+	
+	strSize := StrSplit(Gdip_TextToGraphics(G, Str, Options " x3000 y" Height / 2, Font, , , True), "|")
+	strSize := {"w": strSize[3], "h": strSize[4]}
+	
+	total := 0
+	for i, chr in StrSplit(Str) {
+		w := StrSplit(Gdip_TextToGraphics(G, chr, Options " x0 y" Height / 2, Font, , , True), "|")[3]
+		total += w
+	}
+	totalWidth := total
+	
+	Gdip_TextToGraphics(G, Str, Options " x" x " y" Height / 3, Font)
+	
+	total := 0
+	for i, chr in StrSplit(Str) {
+		w := StrSplit(Gdip_TextToGraphics(G, chr, Options " x" x, Font, , , True), "|")[3]
+		Gdip_TextToGraphics(G, chr, Options " x" x - totalWidth / 2 + total " y" Height * 2 / 3, Font)
+		total += w
+	}
+	
+	Gdip_DeleteGraphics(G)
+	
+	Return pBitmap
+}
+
+
 CircularText(Arc, Str, Width, Height, Font, fSize, fStyle, fColour){
 	pBitmap := Gdip_CreateBitmap(Width, Height)
 	

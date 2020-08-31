@@ -20,7 +20,9 @@ Str := "I thought what I'd do was, I'd pretend I was one of those deaf-mutes "
 ;Arc := 360
 ;Str := "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"
 
-pText := CircularText(Arc, Str, Width, Height, Font, Size, Style, SubStr(Colour, 3))
+;pText := CircularText(Arc, Str, Width, Height, Font, Size, Style, SubStr(Colour, 3))
+
+pText := OneDimentionalText(Str, 3000, Height, Font, Size, Style, SubStr(Colour, 3))
 
 Gdip_SaveBitmapToFile(pText, A_YYYY "-" A_MM "-" A_DD "-" A_Hour "-" A_Min "-" A_Sec ".png", 100)
 
